@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PubnubConsole</class>
+ <widget class="QMainWindow" name="PubnubConsole">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>700</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Pubnub Qt Console</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QWidget" name="formLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>50</y>
+      <width>241</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <layout class="QFormLayout" name="leftConfigForm">
+     <item row="0" column="0">
+      <widget class="QLabel" name="channelLabel">
+       <property name="text">
+        <string>channel</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="channelField">
+       <property name="text">
+        <string>qt_channel</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="authKeyLabel">
+       <property name="text">
+        <string>auth_key</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLineEdit" name="authKeyField"/>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="uuidLabel">
+       <property name="text">
+        <string>uuid</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QLineEdit" name="uuidField"/>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="formLayoutWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>50</y>
+      <width>411</width>
+      <height>80</height>
+     </rect>
+    </property>
+    <layout class="QFormLayout" name="rightConfigForm">
+     <item row="0" column="0">
+      <widget class="QLabel" name="publishKeyLabel">
+       <property name="text">
+        <string>publish key</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="publishKeyField">
+       <property name="text">
+        <string>demo</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLineEdit" name="subscribeKeyField">
+       <property name="text">
+        <string>demo</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="subscribeKeyLabel">
+       <property name="text">
+        <string>subscribe key</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QPushButton" name="subscribeButton">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>10</y>
+      <width>75</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Subscribe</string>
+    </property>
+   </widget>
+   <widget class="QPlainTextEdit" name="publishTextEdit">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>170</y>
+      <width>241</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <property name="plainText">
+     <string>{&quot;text&quot;: &quot;Pubnub-Qt&quot;}</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="publishButton">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>140</y>
+      <width>80</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Publish</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="publishTextLabel">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>140</y>
+      <width>111</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Message to publish</string>
+    </property>
+   </widget>
+   <widget class="QPlainTextEdit" name="presenceOutput">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>170</y>
+      <width>411</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="presenceOutputLabel">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>140</y>
+      <width>47</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Presence</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="presenceClearButton">
+    <property name="geometry">
+     <rect>
+      <x>600</x>
+      <y>140</y>
+      <width>80</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Clear Presence</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="subscribeClearButton">
+    <property name="geometry">
+     <rect>
+      <x>260</x>
+      <y>270</y>
+      <width>80</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Clear</string>
+    </property>
+   </widget>
+   <widget class="QPlainTextEdit" name="messagesOutput">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>300</y>
+      <width>321</width>
+      <height>271</height>
+     </rect>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="messagesOutputLabel">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>270</y>
+      <width>47</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Messages</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="historyClearButton">
+    <property name="geometry">
+     <rect>
+      <x>600</x>
+      <y>270</y>
+      <width>80</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Clear</string>
+    </property>
+   </widget>
+   <widget class="QPlainTextEdit" name="historyOutput">
+    <property name="geometry">
+     <rect>
+      <x>360</x>
+      <y>300</y>
+      <width>321</width>
+      <height>271</height>
+     </rect>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="historyOutputLabel">
+    <property name="geometry">
+     <rect>
+      <x>370</x>
+      <y>270</y>
+      <width>47</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>History</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="historyLoadButton">
+    <property name="geometry">
+     <rect>
+      <x>530</x>
+      <y>270</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Load</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
