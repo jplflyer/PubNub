@@ -29,6 +29,22 @@ bool PubnubConsole::reconnectTo(const char *to) {
     return connect(d_pb_publish.data(), SIGNAL(outcome(pubnub_res)), this, to);
 }
 
+void PubnubConsole::defaultGetHandler(pubnub_res result) {
+    if (PNR_OK == result) {
+        pushMessage(d_pb_publish->get());
+    } else {
+        pushMessage(pubnub_res_2_string(result));
+    }
+}
+
+void PubnubConsole::defaultGetChannelHandler(pubnub_res result) {
+    if (PNR_OK == result) {
+        pushMessage(d_pb_publish->get_channel());
+    } else {
+        pushMessage(pubnub_res_2_string(result));
+    }
+}
+
 void PubnubConsole::onPublish(pubnub_res result) {
     QString report =  QString("Publish result: '") + pubnub_res_2_string(result) + "', response: " + d_pb_publish->last_publish_result();
 
@@ -92,6 +108,7 @@ void PubnubConsole::doSubscribe() {
     QString sub_key = ui->subscribeKeyField->text().trimmed();
     QString auth_key = ui->authKeyField->text().trimmed();
     QString uuid = ui->uuidField->text().trimmed();
+    QString origin = ui->originField->text().trimmed();
 
     d_pb_publish.reset(new pubnub_qt(pub_key, sub_key));
 
@@ -111,6 +128,12 @@ void PubnubConsole::doSubscribe() {
         d_pb_publish.data()->set_auth(auth_key);
         d_pb_subscribe.data()->set_auth(auth_key);
         d_pb_presence.data()->set_auth(auth_key);
+    }
+
+    if (!origin.isEmpty()) {
+        d_pb_publish.data()->set_origin(origin);
+        d_pb_subscribe.data()->set_origin(origin);
+        d_pb_presence.data()->set_origin(origin);
     }
 
     d_pb_subscribe->subscribe(getSubscribeChannels());
@@ -174,6 +197,19 @@ QString PubnubConsole::getTimestamp()
     return QString::number(QDateTime::currentDateTime().toTime_t());
 }
 
+bool PubnubConsole::validateInput(QString str)
+{
+    bool ok = true;
+
+    str = str.trimmed();
+
+    if (str.length() == 0) {
+        ok = false;
+    }
+
+    return ok;
+}
+
 void PubnubConsole::on_subscribeClearButton_clicked()
 {
     ui->messagesOutput->clear();
@@ -214,4 +250,174 @@ void PubnubConsole::on_historyLoadButton_clicked()
     if (result != PNR_STARTED) {
         pushMessage(pubnub_res_2_string(result));
     }
+}
+
+void PubnubConsole::on_listCGButton_clicked()
+{
+    reconnectTo(SLOT(defaultGetChannelHandler(pubnub_res)));
+
+    QString group = ui->channelGroupField->text();
+
+    if (!validateInput(group)) {
+        pushMessage("Channel Group is not valid");
+        return;
+    }
+
+    pubnub_res result = d_pb_publish->list_channel_group(group);
+
+    if (result != PNR_STARTED) {
+        pushMessage(pubnub_res_2_string(result));
+    }
+}
+
+void PubnubConsole::on_addChannel2CGButton_clicked()
+{
+    reconnectTo(SLOT(defaultGetChannelHandler(pubnub_res)));
+
+    QString group = ui->channelGroupField->text();
+    QString channel = ui->cgChannelField->text();
+
+    if (!validateInput(group)) {
+        pushMessage("Channel Group is not valid");
+        return;
+    }
+
+    if (!validateInput(channel)) {
+        pushMessage("Channel is not valid");
+        return;
+    }
+
+    pubnub_res result = d_pb_publish->add_channel_to_group(channel, group);
+
+    if (result != PNR_STARTED) {
+        pushMessage(pubnub_res_2_string(result));
+    }
+}
+
+void PubnubConsole::on_removeChannelFromCGButton_clicked()
+{
+    reconnectTo(SLOT(defaultGetChannelHandler(pubnub_res)));
+
+    QString group = ui->channelGroupField->text();
+    QString channel = ui->cgChannelField->text();
+
+    if (!validateInput(group)) {
+        pushMessage("Channel Group is not valid");
+        return;
+    }
+
+    if (!validateInput(channel)) {
+        pushMessage("Channel is not valid");
+        return;
+    }
+
+    pubnub_res result = d_pb_publish->remove_channel_from_group(channel, group);
+
+    if (result != PNR_STARTED) {
+        pushMessage(pubnub_res_2_string(result));
+    }
+}
+
+void PubnubConsole::on_removeCGButton_clicked()
+{
+    reconnectTo(SLOT(defaultGetChannelHandler(pubnub_res)));
+
+    QString group = ui->channelGroupField->text();
+
+    if (!validateInput(group)) {
+        pushMessage("Channel Group is not valid");
+        return;
+    }
+
+    pubnub_res result = d_pb_publish->remove_channel_group(group);
+
+    if (result != PNR_STARTED) {
+        pushMessage(pubnub_res_2_string(result));
+    }
+}
+
+void PubnubConsole::on_timeButton_clicked()
+{
+    reconnectTo(SLOT(defaultGetHandler(pubnub_res)));
+
+    pubnub_res result = d_pb_publish->time();
+
+    if (result != PNR_STARTED) {
+        pushMessage(pubnub_res_2_string(result));
+    }
+}
+
+void PubnubConsole::on_randomUUIDButton_clicked()
+{
+    d_pb_publish->set_uuid_v4_random();
+    ui->uuidField->setText(d_pb_publish->uuid());
+    pushMessage("Random UUID is set");
+}
+
+void PubnubConsole::on_getUUIDButton_clicked()
+{
+    pushMessage(d_pb_publish->uuid());
+}
+
+void PubnubConsole::on_setUUIDButton_clicked()
+{
+    QString uuid = ui->uuidField->text().trimmed();
+
+    if (!validateInput(uuid)) {
+        pushMessage("UUID is not valid");
+        return;
+    }
+
+    d_pb_publish->set_uuid(uuid);
+
+    pushMessage("New UUID is set");
+}
+
+void PubnubConsole::on_setOrigin_clicked()
+{
+    QString origin = ui->originField->text().trimmed();
+
+    if (!validateInput(origin)) {
+        pushMessage("Origin is not valid");
+        return;
+    }
+
+    d_pb_publish->set_origin(origin);
+
+    pushMessage("New Origin is set");
+}
+
+void PubnubConsole::on_presenceHereNowCGButton_clicked()
+{
+    reconnectTo(SLOT(defaultGetHandler(pubnub_res)));
+
+    QString channel = ui->presenceHereNowChannelField->text().trimmed();
+    QString group = ui->presenceHereNowGroupField->text().trimmed();
+
+    if (!validateInput(channel) && !validateInput(group)) {
+        pushMessage("Channel or Group is not valid");
+        return;
+    }
+
+    d_pb_publish->here_now(channel, group);
+}
+
+void PubnubConsole::on_presenceHereNowGlobalButton_clicked()
+{
+    reconnectTo(SLOT(defaultGetHandler(pubnub_res)));
+    d_pb_publish->global_here_now();
+}
+
+void PubnubConsole::on_presenceWhereNowButton_clicked()
+{
+    reconnectTo(SLOT(defaultGetHandler(pubnub_res)));
+
+    QString uuid = ui->presenceWhereNowUUIDField->text().trimmed();
+
+    if (!validateInput(uuid)) {
+        pushMessage("UUID is not valid");
+        return;
+    }
+
+    d_pb_publish->where_now(uuid);
 }

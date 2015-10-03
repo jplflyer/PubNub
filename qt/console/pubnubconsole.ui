@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>700</width>
-    <height>600</height>
+    <height>625</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -84,6 +84,13 @@
        </property>
       </widget>
      </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="subscribeKeyLabel">
+       <property name="text">
+        <string>subscribe key</string>
+       </property>
+      </widget>
+     </item>
      <item row="1" column="1">
       <widget class="QLineEdit" name="subscribeKeyField">
        <property name="text">
@@ -91,10 +98,17 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="subscribeKeyLabel">
+     <item row="2" column="1">
+      <widget class="QLineEdit" name="originField">
        <property name="text">
-        <string>subscribe key</string>
+        <string>http://pubsub.pubnub.com</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="originLabel">
+       <property name="text">
+        <string>origin</string>
        </property>
       </widget>
      </item>
@@ -191,26 +205,384 @@
      <string>Clear Presence</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="subscribeClearButton">
+   <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
-      <x>260</x>
+      <x>340</x>
       <y>270</y>
-      <width>80</width>
-      <height>23</height>
+      <width>340</width>
+      <height>330</height>
      </rect>
     </property>
-    <property name="text">
-     <string>Clear</string>
+    <property name="currentIndex">
+     <number>2</number>
     </property>
+    <widget class="QWidget" name="historyTab">
+     <attribute name="title">
+      <string>History</string>
+     </attribute>
+     <widget class="QPushButton" name="historyLoadButton">
+      <property name="geometry">
+       <rect>
+        <x>180</x>
+        <y>3</y>
+        <width>75</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Load</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="historyClearButton">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>3</y>
+        <width>80</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Clear</string>
+      </property>
+     </widget>
+     <widget class="QPlainTextEdit" name="historyOutput">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>30</y>
+        <width>320</width>
+        <height>271</height>
+       </rect>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="historyOutputLabel">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>0</y>
+        <width>47</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>History</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="channelGroupsTab">
+     <attribute name="title">
+      <string>Channel Groups</string>
+     </attribute>
+     <widget class="QWidget" name="formLayoutWidget_3">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>80</y>
+        <width>310</width>
+        <height>60</height>
+       </rect>
+      </property>
+      <layout class="QFormLayout" name="formLayout">
+       <item row="0" column="1">
+        <widget class="QLineEdit" name="channelGroupField"/>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="groupLabel">
+         <property name="text">
+          <string>Channel Group</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="groupLabel_2">
+         <property name="text">
+          <string>Channel</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="cgChannelField"/>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QPushButton" name="listCGButton">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>150</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>List Channel Group</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="addChannel2CGButton">
+      <property name="geometry">
+       <rect>
+        <x>170</x>
+        <y>10</y>
+        <width>150</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Add Channel to Group</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="removeChannelFromCGButton">
+      <property name="geometry">
+       <rect>
+        <x>170</x>
+        <y>40</y>
+        <width>150</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Remove Channel from Group</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="removeCGButton">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>40</y>
+        <width>150</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Remove Channel Group</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="presenceTab">
+     <attribute name="title">
+      <string>Presence</string>
+     </attribute>
+     <widget class="QGroupBox" name="hereNowBox">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>311</width>
+        <height>80</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Here Now</string>
+      </property>
+      <widget class="QWidget" name="formLayoutWidget_4">
+       <property name="geometry">
+        <rect>
+         <x>99</x>
+         <y>20</y>
+         <width>201</width>
+         <height>60</height>
+        </rect>
+       </property>
+       <layout class="QFormLayout" name="formLayout_2">
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="presenceHereNowChannelField">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="presenceHereNowChannelLabel">
+          <property name="text">
+           <string>Channel</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="presenceHereNowGroupLabel">
+          <property name="text">
+           <string>Group</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLineEdit" name="presenceHereNowGroupField">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QPushButton" name="presenceHereNowCGButton">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>20</y>
+         <width>80</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Channel/Group</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="presenceHereNowGlobalButton">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>50</y>
+         <width>80</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Global</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QGroupBox" name="groupBox">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>100</y>
+        <width>311</width>
+        <height>50</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Where Now</string>
+      </property>
+      <widget class="QPushButton" name="presenceWhereNowButton">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>20</y>
+         <width>80</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Where Now</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="presenceWhereNowUUIDLabel">
+       <property name="geometry">
+        <rect>
+         <x>110</x>
+         <y>20</y>
+         <width>40</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>UUID</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="presenceWhereNowUUIDField">
+       <property name="geometry">
+        <rect>
+         <x>148</x>
+         <y>20</y>
+         <width>152</width>
+         <height>20</height>
+        </rect>
+       </property>
+      </widget>
+     </widget>
+     <zorder>hereNowBox</zorder>
+     <zorder>groupBox</zorder>
+     <zorder>groupBox</zorder>
+    </widget>
+    <widget class="QWidget" name="miscTab">
+     <attribute name="title">
+      <string>Misc</string>
+     </attribute>
+     <widget class="QPushButton" name="timeButton">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>90</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Time</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="randomUUIDButton">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>50</y>
+        <width>90</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Random UUID</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="getUUIDButton">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>50</y>
+        <width>90</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Get UUID</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="setUUIDButton">
+      <property name="geometry">
+       <rect>
+        <x>230</x>
+        <y>50</y>
+        <width>90</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="toolTip">
+       <string>Apply UUID to the current subscription</string>
+      </property>
+      <property name="text">
+       <string>Set UUID</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="setOrigin">
+      <property name="geometry">
+       <rect>
+        <x>230</x>
+        <y>10</y>
+        <width>90</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="toolTip">
+       <string>Apply UUID to the current subscription</string>
+      </property>
+      <property name="text">
+       <string>Set Origin</string>
+      </property>
+     </widget>
+    </widget>
    </widget>
    <widget class="QPlainTextEdit" name="messagesOutput">
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>300</y>
-      <width>321</width>
-      <height>271</height>
+      <y>297</y>
+      <width>310</width>
+      <height>300</height>
      </rect>
     </property>
     <property name="readOnly">
@@ -220,8 +592,8 @@
    <widget class="QLabel" name="messagesOutputLabel">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>270</y>
+      <x>20</x>
+      <y>267</y>
       <width>47</width>
       <height>20</height>
      </rect>
@@ -230,10 +602,10 @@
      <string>Messages</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="historyClearButton">
+   <widget class="QPushButton" name="subscribeClearButton">
     <property name="geometry">
      <rect>
-      <x>600</x>
+      <x>250</x>
       <y>270</y>
       <width>80</width>
       <height>23</height>
@@ -241,45 +613,6 @@
     </property>
     <property name="text">
      <string>Clear</string>
-    </property>
-   </widget>
-   <widget class="QPlainTextEdit" name="historyOutput">
-    <property name="geometry">
-     <rect>
-      <x>360</x>
-      <y>300</y>
-      <width>321</width>
-      <height>271</height>
-     </rect>
-    </property>
-    <property name="readOnly">
-     <bool>true</bool>
-    </property>
-   </widget>
-   <widget class="QLabel" name="historyOutputLabel">
-    <property name="geometry">
-     <rect>
-      <x>370</x>
-      <y>270</y>
-      <width>47</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>History</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="historyLoadButton">
-    <property name="geometry">
-     <rect>
-      <x>530</x>
-      <y>270</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Load</string>
     </property>
    </widget>
   </widget>

@@ -22,6 +22,8 @@ private slots:
     void onSubscribe(pubnub_res result);
     void onPresence(pubnub_res result);
     void onHistory(pubnub_res result);
+    void defaultGetHandler(pubnub_res result);
+    void defaultGetChannelHandler(pubnub_res result);
 
     void pushMessage(QString string);
     void pushPresence(QString string);
@@ -37,6 +39,30 @@ private slots:
     void on_historyClearButton_clicked();
 
     void on_historyLoadButton_clicked();
+
+    void on_listCGButton_clicked();
+
+    void on_addChannel2CGButton_clicked();
+
+    void on_removeChannelFromCGButton_clicked();
+
+    void on_removeCGButton_clicked();
+
+    void on_timeButton_clicked();
+
+    void on_randomUUIDButton_clicked();
+
+    void on_getUUIDButton_clicked();
+
+    void on_setUUIDButton_clicked();
+
+    void on_setOrigin_clicked();
+
+    void on_presenceHereNowCGButton_clicked();
+
+    void on_presenceHereNowGlobalButton_clicked();
+
+    void on_presenceWhereNowButton_clicked();
 
 private:
     Ui::PubnubConsole *ui;
@@ -58,6 +84,8 @@ private:
     QString getSubscribeChannels();
     QString getPresenceChannels();
     QString getTimestamp();
+
+    bool validateInput(QString str);
 };
 
 #endif // PUBNUBCONSOLE_H
