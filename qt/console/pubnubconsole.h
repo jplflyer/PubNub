@@ -64,6 +64,10 @@ private slots:
 
     void on_presenceWhereNowButton_clicked();
 
+    void on_getStateButton_clicked();
+
+    void on_setStateButton_clicked();
+
 private:
     Ui::PubnubConsole *ui;
     QLabel *statusLabel;

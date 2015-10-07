@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>700</width>
-    <height>625</height>
+    <height>600</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -211,11 +211,11 @@
       <x>340</x>
       <y>270</y>
       <width>340</width>
-      <height>330</height>
+      <height>310</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>3</number>
     </property>
     <widget class="QWidget" name="historyTab">
      <attribute name="title">
@@ -495,9 +495,159 @@
        </property>
       </widget>
      </widget>
-     <zorder>hereNowBox</zorder>
-     <zorder>groupBox</zorder>
-     <zorder>groupBox</zorder>
+    </widget>
+    <widget class="QWidget" name="stateTab">
+     <attribute name="title">
+      <string>State</string>
+     </attribute>
+     <widget class="QTableWidget" name="stateTable">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>77</y>
+        <width>320</width>
+        <height>204</height>
+       </rect>
+      </property>
+      <property name="horizontalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOff</enum>
+      </property>
+      <property name="showDropIndicator" stdset="0">
+       <bool>false</bool>
+      </property>
+      <property name="dragDropOverwriteMode">
+       <bool>false</bool>
+      </property>
+      <property name="rowCount">
+       <number>6</number>
+      </property>
+      <property name="columnCount">
+       <number>2</number>
+      </property>
+      <attribute name="horizontalHeaderCascadingSectionResizes">
+       <bool>true</bool>
+      </attribute>
+      <attribute name="horizontalHeaderStretchLastSection">
+       <bool>true</bool>
+      </attribute>
+      <attribute name="verticalHeaderStretchLastSection">
+       <bool>true</bool>
+      </attribute>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <column>
+       <property name="text">
+        <string>key</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>value</string>
+       </property>
+      </column>
+      <item row="0" column="0">
+       <property name="text">
+        <string>a</string>
+       </property>
+      </item>
+      <item row="0" column="1">
+       <property name="text">
+        <string>5</string>
+       </property>
+      </item>
+      <item row="1" column="0">
+       <property name="text">
+        <string>b</string>
+       </property>
+      </item>
+      <item row="1" column="1">
+       <property name="text">
+        <string>qwer</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QLineEdit" name="stateChannelField">
+      <property name="geometry">
+       <rect>
+        <x>70</x>
+        <y>10</y>
+        <width>160</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>demo</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="stateChannelLabel">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>10</y>
+        <width>47</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Channel</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="getStateButton">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>10</y>
+        <width>75</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Get State</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="setStateButton">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>40</y>
+        <width>75</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Set State</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="stateUuidLabel">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>40</y>
+        <width>47</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>UUID</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="stateUuidField">
+      <property name="geometry">
+       <rect>
+        <x>70</x>
+        <y>40</y>
+        <width>160</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>ttt</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="miscTab">
      <attribute name="title">
@@ -582,7 +732,7 @@
       <x>20</x>
       <y>297</y>
       <width>310</width>
-      <height>300</height>
+      <height>280</height>
      </rect>
     </property>
     <property name="readOnly">
@@ -615,6 +765,19 @@
      <string>Clear</string>
     </property>
    </widget>
+   <zorder>formLayoutWidget</zorder>
+   <zorder>formLayoutWidget_2</zorder>
+   <zorder>subscribeButton</zorder>
+   <zorder>publishTextEdit</zorder>
+   <zorder>publishButton</zorder>
+   <zorder>publishTextLabel</zorder>
+   <zorder>presenceOutput</zorder>
+   <zorder>presenceOutputLabel</zorder>
+   <zorder>presenceClearButton</zorder>
+   <zorder>messagesOutput</zorder>
+   <zorder>messagesOutputLabel</zorder>
+   <zorder>subscribeClearButton</zorder>
+   <zorder>tabWidget</zorder>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>

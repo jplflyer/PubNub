@@ -5,6 +5,9 @@ extern "C" {
 #include "pubnub_helper.h"
 }
 
+#include <QJsonObject>
+#include <QJsonDocument>
+
 PubnubConsole::PubnubConsole(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::PubnubConsole)
@@ -420,4 +423,70 @@ void PubnubConsole::on_presenceWhereNowButton_clicked()
     }
 
     d_pb_publish->where_now(uuid);
+}
+
+void PubnubConsole::on_getStateButton_clicked()
+{
+    reconnectTo(SLOT(defaultGetHandler(pubnub_res)));
+
+    QString channel = ui->stateChannelField->text().trimmed();
+    QString uuid = ui->stateUuidField->text().trimmed();
+
+    if (!validateInput(channel)) {
+        pushMessage("Channels not valid");
+        return;
+    }
+
+    if (!validateInput(uuid)) {
+        pushMessage("UUID is not valid");
+        return;
+    }
+
+    d_pb_publish->state_get(channel, "", uuid);
+}
+
+void PubnubConsole::on_setStateButton_clicked()
+{
+    int i;
+
+    QJsonObject state;
+    QString key;
+    QString value;
+    QTableWidgetItem *keyItem;
+    QTableWidgetItem *valueItem;
+
+    reconnectTo(SLOT(defaultGetHandler(pubnub_res)));
+
+    QString channel = ui->stateChannelField->text().trimmed();
+    QString uuid = ui->stateUuidField->text().trimmed();
+
+    if (!validateInput(channel)) {
+        pushMessage("Channels not valid");
+        return;
+    }
+
+    if (!validateInput(uuid)) {
+        pushMessage("UUID is not valid");
+        return;
+    }
+
+    for (i = 0; i < ui->stateTable->rowCount(); i++) {
+        keyItem = ui->stateTable->item(i, 0);
+        valueItem = ui->stateTable->item(i, 1);
+
+        if (keyItem && valueItem) {
+            key = keyItem->text().trimmed();
+            value = valueItem->text().trimmed();
+
+            if (key.length() > 0 && value.length() > 0) {
+                // TODO: detect type of value
+                state.insert(key, value);
+            }
+        }
+    }
+
+    QJsonDocument doc(state);
+    QString strJson(doc.toJson(QJsonDocument::Compact));
+
+    d_pb_publish->set_state(channel, "", uuid, strJson);
 }
