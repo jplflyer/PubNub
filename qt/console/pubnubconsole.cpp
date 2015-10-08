@@ -14,6 +14,7 @@ PubnubConsole::PubnubConsole(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    isNumberRe = new QRegExp("\\d*");
     statusLabel = new QLabel(this);
     statusLabel->setText("Initializing...");
     ui->statusbar->addPermanentWidget(statusLabel, 1);
@@ -479,8 +480,19 @@ void PubnubConsole::on_setStateButton_clicked()
             value = valueItem->text().trimmed();
 
             if (key.length() > 0 && value.length() > 0) {
-                // TODO: detect type of value
-                state.insert(key, value);
+                if (value.toLower() == "true") {
+                    state.insert(key, true);
+                } else if (value.toLower() == "false") {
+                    state.insert(key, false);
+                } else if (value.toLower() == "null") {
+                    state.insert(key, QJsonValue::Null);
+                } else if (value.toLower() == "undefined") {
+                    state.insert(key, QJsonValue::Undefined);
+                } else if (isNumberRe->exactMatch(value)) {
+                    state.insert(key, value.toInt());
+                } else {
+                    state.insert(key, value);
+                }
             }
         }
     }

@@ -90,6 +90,8 @@ private:
     QString getTimestamp();
 
     bool validateInput(QString str);
+
+    QRegExp *isNumberRe;
 };
 
 #endif // PUBNUBCONSOLE_H
