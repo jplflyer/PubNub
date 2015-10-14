@@ -6,6 +6,7 @@ extern "C" {
 }
 
 #include <QJsonObject>
+#include <QJsonArray>
 #include <QJsonDocument>
 
 PubnubConsole::PubnubConsole(QWidget *parent) :
@@ -59,10 +60,37 @@ void PubnubConsole::onHistory(pubnub_res result) {
     if (PNR_OK != result) {
         pushMessage(QString("History failed, result: ") + pubnub_res_2_string(result));
     } else {
-        QList<QString> msg = d_pb_publish->get_all();
+        QString msg = d_pb_publish->get_all()[0];
+        QJsonDocument doc = QJsonDocument::fromJson(msg.toUtf8());
+        QJsonDocument element;
 
-        for (int i = 0; i < msg.size(); ++i) {
-            pushHistory(msg[i]);
+        if (!doc.isNull() && doc.isArray()) {
+            QJsonArray array = doc.array();
+
+            foreach (const QJsonValue & value, array) {
+                switch(value.type()) {
+                case QJsonValue::Object:
+                case QJsonValue::Array:
+                    element = QJsonDocument::fromVariant(value.toVariant());
+                    pushHistory(element.toJson(QJsonDocument::Compact));
+                    break;
+                case QJsonValue::String:
+                    pushHistory(value.toString());
+                    break;
+                case QJsonValue::Double:
+                    pushHistory(QString::number(value.toDouble()));
+                    break;
+                case QJsonValue::Bool:
+                    pushHistory(value.toBool() ? "true" : "false");
+                    break;
+                case QJsonValue::Null:
+                    pushHistory("NULL");
+                    break;
+                case QJsonValue::Undefined:
+                    pushHistory("Undefined");
+                    break;
+                }
+            }
         }
     }
 }
@@ -85,6 +113,7 @@ void PubnubConsole::onSubscribe(pubnub_res result) {
     }
 
     result = d_pb_subscribe->subscribe(getSubscribeChannels());
+
     if (result != PNR_STARTED) {
         pushMessage(QString("Subscribe failed, result: '") + pubnub_res_2_string(result) + "'");
     }
@@ -248,6 +277,8 @@ void PubnubConsole::on_subscribeButton_clicked()
 void PubnubConsole::on_historyLoadButton_clicked()
 {
     reconnectTo(SLOT(onHistory(pubnub_res)));
+
+    ui->historyOutput->clear();
 
     pubnub_res result = d_pb_publish->history(ui->channelField->text());
 
