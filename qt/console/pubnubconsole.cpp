@@ -398,11 +398,6 @@ void PubnubConsole::on_setUUIDButton_clicked()
 {
     QString uuid = ui->uuidField->text().trimmed();
 
-    if (!validateInput(uuid)) {
-        pushMessage("UUID is not valid");
-        return;
-    }
-
     d_pb_publish->set_uuid(uuid);
 
     pushMessage("New UUID is set");
