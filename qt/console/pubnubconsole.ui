@@ -220,7 +220,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>4</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="historyTab">
      <attribute name="title">
@@ -229,9 +229,9 @@
      <widget class="QPushButton" name="historyLoadButton">
       <property name="geometry">
        <rect>
-        <x>180</x>
-        <y>3</y>
-        <width>75</width>
+        <x>220</x>
+        <y>10</y>
+        <width>110</width>
         <height>22</height>
        </rect>
       </property>
@@ -242,9 +242,9 @@
      <widget class="QPushButton" name="historyClearButton">
       <property name="geometry">
        <rect>
-        <x>250</x>
-        <y>3</y>
-        <width>80</width>
+        <x>220</x>
+        <y>40</y>
+        <width>110</width>
         <height>22</height>
        </rect>
       </property>
@@ -256,26 +256,52 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>30</y>
+        <y>70</y>
         <width>320</width>
-        <height>271</height>
+        <height>210</height>
        </rect>
       </property>
       <property name="readOnly">
        <bool>true</bool>
       </property>
      </widget>
-     <widget class="QLabel" name="historyOutputLabel">
+     <widget class="QLabel" name="historyCountLabel">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>0</y>
-        <width>47</width>
+        <x>40</x>
+        <y>15</y>
+        <width>30</width>
+        <height>13</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Count</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="historyCountEdit">
+      <property name="geometry">
+       <rect>
+        <x>90</x>
+        <y>10</y>
+        <width>60</width>
         <height>20</height>
        </rect>
       </property>
       <property name="text">
-       <string>History</string>
+       <string>100</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="historyTimetokensCheckbox">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>40</y>
+        <width>120</width>
+        <height>18</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Include Timetokens</string>
       </property>
      </widget>
     </widget>

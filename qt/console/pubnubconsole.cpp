@@ -280,7 +280,14 @@ void PubnubConsole::on_historyLoadButton_clicked()
 
     ui->historyOutput->clear();
 
-    pubnub_res result = d_pb_publish->history(ui->channelField->text());
+    int count = ui->historyCountEdit->text().toInt();
+    if (count < 1 || count > 100) {
+        pushMessage("History count value should be between 1 and 100");
+        return;
+    }
+
+    bool timetokens = ui->historyTimetokensCheckbox->isChecked();
+    pubnub_res result = d_pb_publish->history(ui->channelField->text(), count, timetokens);
 
     if (result != PNR_STARTED) {
         pushMessage(pubnub_res_2_string(result));
