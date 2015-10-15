@@ -15,6 +15,7 @@ PubnubConsole::PubnubConsole(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    sslOptions = 0;
     isNumberRe = new QRegExp("\\d*");
     statusLabel = new QLabel(this);
     statusLabel->setText("Initializing...");
@@ -144,12 +145,15 @@ void PubnubConsole::doSubscribe() {
     QString origin = ui->originField->text().trimmed();
 
     d_pb_publish.reset(new pubnub_qt(pub_key, sub_key));
-
     d_pb_subscribe.reset(new pubnub_qt(pub_key, sub_key));
-    connect(d_pb_subscribe.data(), SIGNAL(outcome(pubnub_res)), this, SLOT(onSubscribe(pubnub_res)));
-
     d_pb_presence.reset(new pubnub_qt(pub_key, sub_key));
+
+    connect(d_pb_subscribe.data(), SIGNAL(outcome(pubnub_res)), this, SLOT(onSubscribe(pubnub_res)));
     connect(d_pb_presence.data(), SIGNAL(outcome(pubnub_res)), this, SLOT(onPresence(pubnub_res)));
+
+    d_pb_publish->set_ssl_options(sslOptions);
+    d_pb_subscribe->set_ssl_options(sslOptions);
+    d_pb_presence->set_ssl_options(sslOptions);
 
     if (!uuid.isEmpty()) {
         d_pb_publish.data()->set_uuid(uuid);
@@ -191,6 +195,12 @@ void PubnubConsole::doUnsubscribe() {
     statusLabel->setText("NOT CONNECTED - Press 'Subscribe' button");
     subscribed = false;
     connected = false;
+}
+
+void PubnubConsole::doResubscribe() {
+//    qDebug() << QString("%1").arg(sslOptions, 0, 16);
+    doUnsubscribe();
+    doSubscribe();
 }
 
 void PubnubConsole::pushMessage(QString string)
@@ -534,4 +544,37 @@ void PubnubConsole::on_setStateButton_clicked()
     QString strJson(doc.toJson(QJsonDocument::Compact));
 
     d_pb_publish->set_state(channel, "", uuid, strJson);
+}
+
+void PubnubConsole::on_sslButton_clicked(bool checked)
+{
+    if (checked) {
+        sslOptions = sslOptions | pubnub_qt::useSSL;
+    } else {
+        sslOptions = sslOptions & ~pubnub_qt::useSSL;
+    }
+
+    doResubscribe();
+}
+
+void PubnubConsole::on_reduceSecurityOnErrorButton_clicked(bool checked)
+{
+    if (checked) {
+        sslOptions = sslOptions | pubnub_qt::reduceSecurityOnError;
+    } else {
+        sslOptions = sslOptions & ~pubnub_qt::reduceSecurityOnError;
+    }
+
+    doResubscribe();
+}
+
+void PubnubConsole::on_ignoreSecureConnectionRquirementsButton_clicked(bool checked)
+{
+    if (checked) {
+        sslOptions = sslOptions | pubnub_qt::ignoreSecureConnectionRequirement;
+    } else {
+        sslOptions = sslOptions & ~pubnub_qt::ignoreSecureConnectionRequirement;
+    }
+
+    doResubscribe();
 }

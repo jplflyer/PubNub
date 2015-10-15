@@ -836,6 +836,54 @@
      <string>Clear</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="sslButton">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>10</y>
+      <width>80</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>SSL</string>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="reduceSecurityOnErrorButton">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>10</y>
+      <width>200</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Reduce security on error</string>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="ignoreSecureConnectionRquirementsButton">
+    <property name="geometry">
+     <rect>
+      <x>450</x>
+      <y>10</y>
+      <width>230</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Ignore secure connection requirement</string>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+   </widget>
    <zorder>formLayoutWidget</zorder>
    <zorder>formLayoutWidget_2</zorder>
    <zorder>subscribeButton</zorder>
@@ -849,6 +897,9 @@
    <zorder>messagesOutputLabel</zorder>
    <zorder>subscribeClearButton</zorder>
    <zorder>tabWidget</zorder>
+   <zorder>sslButton</zorder>
+   <zorder>reduceSecurityOnErrorButton</zorder>
+   <zorder>ignoreSecureConnectionRquirementsButton</zorder>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>

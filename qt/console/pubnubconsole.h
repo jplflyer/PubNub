@@ -68,6 +68,12 @@ private slots:
 
     void on_setStateButton_clicked();
 
+    void on_sslButton_clicked(bool checked);
+
+    void on_reduceSecurityOnErrorButton_clicked(bool checked);
+
+    void on_ignoreSecureConnectionRquirementsButton_clicked(bool checked);
+
 private:
     Ui::PubnubConsole *ui;
     QLabel *statusLabel;
@@ -84,6 +90,7 @@ private:
 
     void doSubscribe();
     void doUnsubscribe();
+    void doResubscribe();
 
     QString getSubscribeChannels();
     QString getPresenceChannels();
@@ -92,6 +99,8 @@ private:
     bool validateInput(QString str);
 
     QRegExp *isNumberRe;
+
+    pubnub_qt::ssl_opts sslOptions;
 };
 
 #endif // PUBNUBCONSOLE_H
