@@ -1,51 +1,19 @@
-## Pubnub C/C++ client libraries
+# Introduction
+This repository is Joe's attempt to get a single library to compile against. Most of the work will be in a Makefile in the cpp directory.
 
-This repository has the source for the C/C++ client libraries,
-designed mostly for embedded systems, but perfectly suitable for
-"regular" (POSIX, Windows) systems, too.
+I have:
 
-### Official Docs 
-Docs for C/C++ for Posix, Windows, as well as FreeRTOS and other embedded platforms are available at 
-https://www.pubnub.com/docs/posix-c/pubnub-c-sdk
+  - Moved this directory's README.md to README.orig.md.
+  - Created cpp/Makefile.
+  - Created samples and copied some files from the cpp directory.
 
-## Please direct all Support Questions and Concerns to Support@PubNub.com
+See samples/Makefile to see how to get a successful build of your own programs.
 
-## Directory Organization
+# Directions To Build The Library
+To produce /usr/local/lib/libpubnub.a and /usr/local/include/pubnub:
 
-The directories of the library repository are:
+    cd cpp
+    make
+    make install  # May need to sudo
 
-- `core` : The core part, with modules portable to all, or most, libraries for
-  specific platforms
-
-- `lib` : Modules for libraries that are available on more than one platform
-
-- `windows` : Modules and Makefile for the Windows platform
-
-- `posix` : Modules and Makefile for POSIX OSes (tested mostly on Linux)
-
-- `openssl`: Modules and Makefile(s) for OpenSSL (on POSIX and Windows)
-
-- `cpp`: Modules, Makefile(s) and examples for the C++ wrapper
-
-- `qt`: Modules, Qt projects and examples for Qt
-
-- `freertos` : Modules and Makefile for the FreeRTOS
-
-- `microchip_harmony` : Modules and project for Microchip MPLAB Harmony
-
-  
-## Files
-
-In this root directory we have some files, too:
-
-- `posix.mk`: a "master" Makefile for POSIX - will build all the POSIX
-  Makefiles there are (doesn't build Qt - you might not have Qt)
-- `windows.mk`: a "master" Makefile for Windows - will build all the 
-  Windows Makefiles there are (doesn't build Qt, you might not have Qt)
-- `VERSION`: Identifies the latest stable / recommended release
-- `.pubnub.yml`: Standard Pubnub library description in YAML
-
-  
-## Contributing
-
-Please read the [Contribution Guidelines](CONTRIBUTING.md).
+All source is compiled with g++, which means the library is NOT compatible with linking against programs compiled with gcc. You could change the gcc/Makefile to compile .c with gcc, and then add -D PUBNUB_USE_EXTERN_C when compiling with g++. If you do that, then you also need to use that flag in your own Makefiles. As I am not going to do any of this from C and only from C++, I didn't find that useful.
